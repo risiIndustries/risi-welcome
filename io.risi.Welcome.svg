@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   version="1.1"
+   id="svg81"
+   sodipodi:docname="io.risi.Welcome.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview83"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="6.5078126"
+     inkscape:cx="43.870348"
+     inkscape:cy="72.835533"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg81" />
+  <defs
+     id="defs57">
+    <radialGradient
+       id="d"
+       gradientUnits="userSpaceOnUse"
+       cx="88.905045"
+       cy="180.40962"
+       fx="88.905045"
+       fy="180.40962"
+       r="48"
+       gradientTransform="matrix(2.1548613,0.00233564,-0.00283509,2.6156676,-78.65506,-468.66748)">
+      <stop
+         offset="0"
+         stop-color="#ed686f"
+         id="stop2"
+         style="stop-color:#fdcf2a;stop-opacity:1" />
+      <stop
+         offset=".833"
+         stop-color="#a51d2d"
+         id="stop4"
+         style="stop-color:#ca3e36;stop-opacity:1" />
+      <stop
+         offset="1"
+         stop-color="#8a1f24"
+         id="stop6" />
+    </radialGradient>
+    <radialGradient
+       id="e"
+       gradientUnits="userSpaceOnUse"
+       cx="64"
+       cy="209.913"
+       fx="64"
+       fy="209.913"
+       r="41.212"
+       gradientTransform="matrix(1.55293 0 0 1.31029 -35.388 -243.047)">
+      <stop
+         offset="0"
+         stop-color="#fff"
+         id="stop9" />
+      <stop
+         offset=".519"
+         stop-color="#fff"
+         id="stop11" />
+      <stop
+         offset=".734"
+         stop-color="#cfcfcf"
+         id="stop13" />
+      <stop
+         offset="1"
+         stop-color="#cecece"
+         id="stop15" />
+    </radialGradient>
+    <linearGradient
+       id="h"
+       gradientUnits="userSpaceOnUse"
+       x1="46"
+       y1="104"
+       x2="96.377"
+       y2="104"
+       gradientTransform="translate(-8 -18)">
+      <stop
+         offset="0"
+         stop-color="#9a9996"
+         id="stop18" />
+      <stop
+         offset=".278"
+         stop-color="#c0bfbc"
+         id="stop20" />
+      <stop
+         offset=".774"
+         stop-color="#9f9e9b"
+         id="stop22" />
+      <stop
+         offset="1"
+         stop-color="#77767b"
+         id="stop24" />
+    </linearGradient>
+    <linearGradient
+       id="k"
+       gradientUnits="userSpaceOnUse"
+       x1="54"
+       y1="284"
+       x2="66"
+       y2="284"
+       gradientTransform="translate(0 -172)">
+      <stop
+         offset="0"
+         stop-color="#c64600"
+         id="stop27"
+         style="stop-color:#206495;stop-opacity:1" />
+      <stop
+         offset="1"
+         stop-color="#ff7800"
+         id="stop29"
+         style="stop-color:#51a2da;stop-opacity:1" />
+    </linearGradient>
+    <clipPath
+       id="b">
+      <path
+         d="M0 0h192v152H0z"
+         id="path32" />
+    </clipPath>
+    <clipPath
+       id="c">
+      <path
+         d="M0 0h192v152H0z"
+         id="path35" />
+    </clipPath>
+    <mask
+       id="g">
+      <g
+         filter="url(#a)"
+         id="g40">
+        <path
+           fill-opacity=".1"
+           d="M0 0h128v128H0z"
+           id="path38" />
+      </g>
+    </mask>
+    <mask
+       id="j">
+      <g
+         filter="url(#a)"
+         id="g45">
+        <path
+           fill-opacity=".3"
+           d="M0 0h128v128H0z"
+           id="path43" />
+      </g>
+    </mask>
+    <g
+       id="i"
+       clip-path="url(#c)">
+      <path
+         d="M44 100h56v2H44zm0 0"
+         fill="#fff"
+         id="path48" />
+    </g>
+    <g
+       id="f"
+       clip-path="url(#b)">
+      <path
+         d="M91 116l8-13H45l8.004 13zm0 0"
+         fill-rule="evenodd"
+         id="path51" />
+    </g>
+    <filter
+       id="a"
+       filterUnits="objectBoundingBox"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         in="SourceGraphic"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix54" />
+    </filter>
+  </defs>
+  <path
+     d="M77 88l-5 22"
+     fill="none"
+     stroke-width="2"
+     stroke="#77767b"
+     id="path59" />
+  <path
+     d="M 64,4 C 51.645,4.09 39.121,8.074 29.824,16.215 25.172,20.281 21.375,25.348 18.926,31.02 16.48,36.695 15.402,42.977 16,49.125 c 0.695,7.16 3.594,13.941 7.207,20.16 a 90.703,90.703 0 0 0 14.398,18.7 L 44.395,100 h 37.96 L 91,87 a 114.167,114.167 0 0 0 13.125,-17.648 c 3.766,-6.243 6.977,-12.993 7.875,-20.227 0.766,-6.168 -0.207,-12.52 -2.613,-18.254 C 106.984,25.137 103.168,20.023 98.48,15.941 89.105,7.773 76.434,3.911 64,4 Z m 0,0"
+     fill="url(#d)"
+     id="path61"
+     style="fill:url(#d)" />
+  <path
+     d="M65.262 4.016c-17.219 2.597-33.532 8.3-40.848 28.23C17.81 56.95 28.074 68.863 41.09 88l5.851 12.008h7.922C49.938 85.496 37.777 60.34 37.777 47.703c0-37.058 27.282-43.558 27.485-43.687zm.004 0c.07.187 8.511 17.238 8.507 43.687 0 13.957-1.949 38.047-3.847 52.305H80c24.254-43.512 32.934-82.988-14.734-95.992zm0 0"
+     fill="url(#e)"
+     id="path63" />
+  <use
+     xlink:href="#f"
+     transform="translate(-8 -16)"
+     mask="url(#g)"
+     id="use65" />
+  <path
+     d="M52 86l5 23"
+     fill="none"
+     stroke-width="2"
+     stroke="#c0bfbc"
+     id="path67" />
+  <path
+     d="M80 110v11.316a4.666 4.666 0 01-4.676 4.676H52.676A4.666 4.666 0 0148 121.316V110zm0 0"
+     fill="#c64600"
+     id="path69"
+     style="fill:#1f6292;fill-opacity:1" />
+  <path
+     d="M37.457 86.395L49.562 109"
+     fill="none"
+     stroke-width="2"
+     stroke="#9a9996"
+     id="path71" />
+  <path
+     d="M36 84v2s0 2 1.871 2H90.13C92 88 92 86 92 86v-2zm0 0"
+     fill="url(#h)"
+     id="path73" />
+  <use
+     xlink:href="#i"
+     transform="translate(-8 -16)"
+     mask="url(#j)"
+     id="use75" />
+  <path
+     d="M90.5 87l-12.063 22"
+     fill="none"
+     stroke-width="2"
+     stroke="#77767b"
+     id="path77" />
+  <path
+     d="M80 108v11.316a4.666 4.666 0 01-4.676 4.676H52.676A4.666 4.666 0 0148 119.316V108zm0 0"
+     fill="url(#k)"
+     id="path79"
+     style="opacity:1" />
+</svg>
