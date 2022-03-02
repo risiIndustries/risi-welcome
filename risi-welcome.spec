@@ -26,10 +26,11 @@ your computer to your likings.
 %install
 
 mkdir -p %{buildroot}%{_bindir}
+cp -a usr/share %{buildroot}%{_datadir}
+
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart/
 
-cp -a usr/share %{buildroot}%{_datadir}
 cp io.risi.Welcome.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.risi.Welcome.svg
 cp usr/share/applications/io.risi.Welcome.desktop %{buildroot}%{_sysconfdir}/xdg/autostart/
 install -m 755 __main__.py %{buildroot}%{_bindir}/risi-welcome
