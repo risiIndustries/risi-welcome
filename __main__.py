@@ -6,7 +6,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
 icons = Gtk.IconTheme.get_default().list_icons(None)
-settings = Gio.Settings.new("io.risi.welcome")
+settings = Gio.Settings.new("io.risi.Welcome")
 
 packagesproc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
 

@@ -1,5 +1,5 @@
 <schemalist>
-  <schema path="/io/risi/welcome/" id="io.risi.welcome">
+  <schema path="/io/risi/Welcome/" id="io.risi.Welcome">
     <key type="b" name="startup-show">
       <default>true</default>
       <summary>Show risiWelcome on startup.</summary>
