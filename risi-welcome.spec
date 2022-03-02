@@ -41,7 +41,7 @@ install -m 755 __main__.py %{buildroot}%{_bindir}/risi-welcome
 %{_datadir}/risiWelcome
 %{_datadir}/glib-2.0/schemas/io.risi.Welcome.gschema.xml
 %{_datadir}/applications/io.risi.Welcome.desktop
-%{_datadir}/icons/hicolor/scalable/apps/io.risi.Tweaks.svg
+%{_datadir}/icons/hicolor/scalable/apps/io.risi.Welcome.svg
 %{_bindir}/%{name}
 %{_sysconfdir}/xdg/autostart/io.risi.Welcome.desktop
 
