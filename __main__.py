@@ -38,17 +38,9 @@ class Welcome:
             Step(
                 "applications-multimedia-symbolic",
                 "Setup Flathub (Highly Recommended)",
-                "Install Flatpak and sets up Flathub. This gives you a bigger selection of apps including some proprietary apps. ",
+                "Installs Flatpak and sets up Flathub. This gives you a bigger selection of apps including some proprietary apps. ",
                 ["/usr/bin/risi-script-gtk", "/usr/share/risiWelcome/scripts/flatpaks.risisc", "--trusted"],
-                not check_package("flatpak"), True
-            ),
-            Step(
-                "timeshift",
-                "Setup System Snapshots with Timeshift",
-                "We recommend setting up system snapshots so that you have a place to restore your computer to if "
-                "something breaks.\n\nNOTE: THIS DOES NOT REPLACE A FULL BACKUP!",
-                ["/usr/bin/timeshift-launcher"],
-                check_package("timeshift"), False
+                not get_flathub_installed(), True
             ),
             Step(
                 "org.gnome.Software",
@@ -69,6 +61,13 @@ class Welcome:
                 "io.risi.Tweaks",
                 "Customize risiOS with risiTweaks",
                 "risiTweaks is used to enable experimental features such as extensions.",
+                ["/usr/bin/risi-tweaks"],
+                check_package("risi-tweaks"), False
+            ),
+            Step(
+                "firefox",
+                "Harden Firefox",
+                "Customize Firefox to better respect your privacy.",
                 ["/usr/bin/risi-tweaks"],
                 check_package("risi-tweaks"), False
             )
@@ -180,19 +179,31 @@ class Step(Gtk.Box):
         self.set_margin_bottom(15)
 
     def btn_clicked(self, button, subproc, hide):
-        subprocess.run(subproc)
+        subprocess.Popen(subproc)
         self.set_visible(not hide)
+
 
 def start_alignment(obj):
     obj.set_valign(Gtk.Align.START)
     obj.set_halign(Gtk.Align.START)
 
+
 def check_package(package):
     return package in packagesproc.stdout.decode('utf-8').split("\n")
 
+
 def nouveau_running():
-    sp = subprocess.run("lsmod | grep nouveau", shell=True)
-    return not sp.returncode == 0
+    sp = subprocess.run("lsmod | grep nouveau && exit 0 || exit 1", shell=True)
+    return sp.returncode == 0
+
+
+def get_flathub_installed():
+    if check_package("flatpak"):
+        sp = subprocess.run(
+            "flatpak remotes | grep \"flathub\" && exit 0 || exit 1", shell=True, stdout=subprocess.PIPE
+        )
+        return sp.returncode == 0
+    return False
 
 window = Welcome()
 Gtk.main()

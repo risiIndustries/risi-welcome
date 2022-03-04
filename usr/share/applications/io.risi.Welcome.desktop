@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Tour
+Name=risiWelcome
 Type=Application
-Exec=gnome-tour
+Exec=risi-welcome
 Terminal=false
 Categories=GNOME;GTK;Utility;
 Keywords=Gnome;GTK;risi;
