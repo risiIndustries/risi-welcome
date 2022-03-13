@@ -3,12 +3,32 @@ import gi
 import subprocess
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gio, GLib
 
 icons = Gtk.IconTheme.get_default().list_icons(None)
 settings = Gio.Settings.new("io.risi.Welcome")
 
-packagesproc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
+
+class Application(Gtk.Application):
+    def __init__(self):
+        Gtk.Application.__init__(
+            self,
+            application_id="io.risi.Welcome"
+        )
+        self.program = None
+
+    def do_activate(self):
+        if not self.program:
+            self.program = Welcome()
+            self.add_window(self.program.window)
+            self.program.window.set_title("risiWelcome")
+            self.program.window.set_icon_name("io.risi.Welcome")
+            self.program.window.show_all()
+        self.program.window.present()
+
+    def on_quit(self, action, param):
+        self.quit()
+
 
 class Welcome:
     def __init__(self):
@@ -23,14 +43,14 @@ class Welcome:
                 "nvidia",
                 "Install Proprietary NVIDIA Drivers (Highly Recommended)",
                 "Installs proprietary NVIDIA drivers that significantly increase performence.",
-                ["/usr/bin/risi-script-gtk", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
+                ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
                 not nouveau_running() and not check_package("akmod-nvidia"), True
             ),
             Step(
                 "applications-multimedia-symbolic",
                 "Setup RPMFusion &amp; Proprietary Codecs (Highly Recommended)",
                 "Installs RPMFusion which allows contains some extra software that risiOS/Fedora cannot ship, and\nproprietary codecs that may be needed to use some media files and render some websites.",
-                ["/usr/bin/risi-script-gtk", "/usr/share/risiWelcome/scripts/multimedia.risisc", "--trusted"],
+                ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/multimedia.risisc", "--trusted"],
                 not check_package("rpmfusion-free-release") and
                 not check_package("rpmfusion-nonfree-release") and
                 not check_package("gstreamer1-plugins-ugly"), True
@@ -39,7 +59,7 @@ class Welcome:
                 "applications-multimedia-symbolic",
                 "Setup Flathub (Highly Recommended)",
                 "Installs Flatpak and sets up Flathub. This gives you a bigger selection of apps including some proprietary apps. ",
-                ["/usr/bin/risi-script-gtk", "/usr/share/risiWelcome/scripts/flatpaks.risisc", "--trusted"],
+                ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/flatpaks.risisc", "--trusted"],
                 not get_flathub_installed(), True
             ),
             Step(
@@ -132,7 +152,6 @@ class Welcome:
             steps.add(item)
 
         self.window = self.builder.get_object("window")
-        self.window.show_all()
 
 
 class Step(Gtk.Box):
@@ -189,7 +208,8 @@ def start_alignment(obj):
 
 
 def check_package(package):
-    return package in packagesproc.stdout.decode('utf-8').split("\n")
+    packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
+    return package in packages_proc.stdout.decode('utf-8').split("\n")
 
 
 def nouveau_running():
@@ -205,5 +225,6 @@ def get_flathub_installed():
         return sp.returncode == 0
     return False
 
-window = Welcome()
-Gtk.main()
+if __name__ == "__main__":
+    app = Application()
+    app.run()
