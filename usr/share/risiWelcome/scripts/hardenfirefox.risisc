@@ -1,0 +1,31 @@
+#!/bin/risiscript
+metadata:
+  name: "Harden Firefox"
+  id: "io.risi.firefoxharden"
+  description: "Changes Firefox settings to make it more private."
+  dependencies:
+    None
+  root: False
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    level:
+      - CHOICE
+      - "Hardening Level" # Question for users
+      - [ "Convenient", "Fortified", "TIN FOIL HAT!!" ] # The choices for a user to pick
+    tainted_description:
+      - DESCRIPTION
+      - |
+        Hardening Level: How strong to enable privacy protection
+        Convenient (Recommended): Default, changes settings to better privacy defaults without impact on the user experience.
+        Fortified: More private, may disable some features and break a small amount of websites.
+        TIN FOIL HAT: Maximum privacy protection, will break several websites (we recommend installing a 2nd browser for such websites).
+  bash: |
+
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "flatpak remotes"
+      - "flathub"

@@ -44,7 +44,7 @@ class Welcome:
                 "Install Proprietary NVIDIA Drivers (Highly Recommended)",
                 "Installs proprietary NVIDIA drivers that significantly increase performence.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
-                not nouveau_running() and not check_package("akmod-nvidia"), True
+                nouveau_running() and not check_package("akmod-nvidia"), True
             ),
             Step(
                 "applications-multimedia-symbolic",
@@ -89,7 +89,7 @@ class Welcome:
                 "Harden Firefox",
                 "Customize Firefox to better respect your privacy.",
                 ["/usr/bin/risi-tweaks"],
-                check_package("risi-tweaks"), False
+                check_package("risi-tweaks"), True
             )
         ]
         communitysteps = [
@@ -154,10 +154,12 @@ class Welcome:
         self.window = self.builder.get_object("window")
 
 
-class Step(Gtk.Box):
+class Step(Gtk.ListBoxRow):
     def __init__(self, icon, name, description, subproc, show, hide_on_click):
-        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        Gtk.ListBoxRow.__init__(self)
         self.set_no_show_all(not show)
+
+        self.box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 
         if icon in icons:
             self.icon = Gtk.Image.new_from_icon_name(icon, Gtk.IconSize.DIALOG)
@@ -188,18 +190,23 @@ class Step(Gtk.Box):
         self.button.connect("clicked", self.btn_clicked, subproc, hide_on_click)
         self.button.set_valign(Gtk.Align.CENTER)
 
-        self.add(self.icon)
-        self.add(self.textbox)
-        self.add(self.button)
+        self.box.add(self.icon)
+        self.box.add(self.textbox)
+        self.box.add(self.button)
+        self.box.set_margin_start(15)
+        self.box.set_margin_end(15)
+        self.box.set_margin_top(15)
+        self.box.set_margin_bottom(15)
 
-        self.set_margin_start(15)
-        self.set_margin_end(15)
-        self.set_margin_top(15)
-        self.set_margin_bottom(15)
+        self.add(self.box)
+        self.set_margin_start(5)
+        self.set_margin_end(5)
+        self.set_margin_top(5)
+        self.set_margin_bottom(5)
 
     def btn_clicked(self, button, subproc, hide):
         subprocess.Popen(subproc)
-        self.set_visible(not hide)
+        self.props.parent.set_visible(not hide)
 
 
 def start_alignment(obj):
