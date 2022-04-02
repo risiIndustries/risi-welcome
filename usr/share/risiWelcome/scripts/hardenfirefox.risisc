@@ -2,9 +2,7 @@
 metadata:
   name: "Harden Firefox"
   id: "io.risi.firefoxharden"
-  description: "Changes Firefox settings to make it more private."
-  dependencies:
-    None
+  description: "Changes Firefox settings to make it more private. Notes: This only works on non-flatpak Firefox."
   root: False
   one_time_use: True
   risiscript_version: 1.0
@@ -15,17 +13,42 @@ run:
     level:
       - CHOICE
       - "Hardening Level" # Question for users
-      - [ "Convenient", "Fortified", "TIN FOIL HAT!!" ] # The choices for a user to pick
+      - [ "Convenient", "Normal", "Fortified", "TIN FOIL HAT!!"] # The choices for a user to pick
     tainted_description:
       - DESCRIPTION
       - |
         Hardening Level: How strong to enable privacy protection
         Convenient (Recommended): Default, changes settings to better privacy defaults without impact on the user experience.
+        Normal: Unhardens Firefox
         Fortified: More private, may disable some features and break a small amount of websites.
-        TIN FOIL HAT: Maximum privacy protection, will break several websites (we recommend installing a 2nd browser for such websites).
+        TIN FOIL HAT: Maximum privacy protection, will break several websites (we recommend installing a 2nd browser for such websites, or use our webapp manager which doesn't apply these patches).
+    warning:
+      - WARNING
+      - "Warning"
+      - "This may reset some Firefox settings. Run at your own risk."
   bash: |
+    if [[ ! -d ~/.mozilla ]]; then
+      echo "Invalid ~/.mozilla directory"
+      sleep 2
+      exit 1
+    fi
 
-  checks:
-    - COMMANDOUTPUTCONTAINS:
-      - "flatpak remotes"
-      - "flathub"
+    echo "Checking for Profile0"
+    source <(grep = <(grep -A5 '\[Profile0\]' ~/.mozilla/profiles.ini))
+
+    if [ -v Path ]; then
+      echo "Installing to ~/.mozilla/$Path"
+    else
+      echo "Unable to detect Profile0 Path"
+      sleep 2
+      exit 1
+    fi
+
+    rm ~/.mozilla/$Path/user.js || true
+
+    if [ "$level" == "Convenient" ]; then
+      cp /usr/share/risiWelcome/scripts/hardenfirefox/CONVENIENT.js ~/.mozilla/$Path/user.js
+    elif [ "$level" == "Fortified" ]; then
+      cp /usr/share/risiWelcome/scripts/hardenfirefox/FORTIFIED.js ~/.mozilla/$Path/user.js
+    elif [ "$level" == "TIN FOIL HAT!!" ]; then
+      cp /usr/share/risiWelcome/scripts/hardenfirefox/TINFOILHAT.js ~/.mozilla/$Path/user.js
