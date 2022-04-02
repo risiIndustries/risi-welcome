@@ -4,7 +4,7 @@ metadata:
   id: "io.risi.firefoxharden"
   description: "Changes Firefox settings to make it more private. Notes: This only works on non-flatpak Firefox."
   root: False
-  one_time_use: True
+  one_time_use: False
   risiscript_version: 1.0
   reboot: False
 
