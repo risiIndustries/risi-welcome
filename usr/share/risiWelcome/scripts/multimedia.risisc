@@ -24,10 +24,10 @@ run:
     sudo dnf groupupdate -y multimedia
     if [ "$tainted_drivers" = true ]
     then
- 	  dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
-	  dnf install -y libdvdcss
+          dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
+          dnf install -y libdvdcss
     fi
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "rpm -q gstreamer1-plugins-ugly && echo installed"
-      - "installed" 
+      - "installed"

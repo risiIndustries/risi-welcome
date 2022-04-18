@@ -5,6 +5,7 @@ import subprocess
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio, GLib
 
+debug_mode = True
 icons = Gtk.IconTheme.get_default().list_icons(None)
 settings = Gio.Settings.new("io.risi.Welcome")
 packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
@@ -38,9 +39,6 @@ class Welcome:
         startup_check = self.builder.get_object("startup_check")
         startup_check.set_active(settings.get_boolean("startup-show"))
         startup_check.connect("toggled", lambda btn: settings.set_boolean("startup-show", btn.get_active()))
-        print(nouveau_running())
-        print(check_package("akmod-nvidia"))
-        print(not nouveau_running() and not check_package("akmod-nvidia"))
 
         firststeps = [
             Step(
@@ -161,6 +159,8 @@ class Welcome:
 class Step(Gtk.ListBoxRow):
     def __init__(self, icon, name, description, subproc, show, hide_on_click):
         Gtk.ListBoxRow.__init__(self)
+        if debug_mode:
+            show = True
         self.set_no_show_all(not show)
 
         self.box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -210,7 +210,7 @@ class Step(Gtk.ListBoxRow):
 
     def btn_clicked(self, button, subproc, hide):
         subprocess.Popen(subproc)
-        self.props.parent.set_visible(not hide)
+        self.set_visible(not hide)
 
 
 def start_alignment(obj):
