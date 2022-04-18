@@ -90,7 +90,10 @@ class Welcome:
                 "firefox",
                 "Harden Firefox",
                 "Customize Firefox to better respect your privacy.",
-                ["/usr/bin/risi-tweaks"],
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/hardenfirefox.risisc", "--trusted"
+                ],
                 check_package("risi-tweaks"), True
             )
         ]
