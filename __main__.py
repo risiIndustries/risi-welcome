@@ -7,7 +7,8 @@ from gi.repository import Gtk, Gio, GLib
 
 icons = Gtk.IconTheme.get_default().list_icons(None)
 settings = Gio.Settings.new("io.risi.Welcome")
-
+packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
+packages = packages_proc.stdout.decode('utf-8').split("\n")
 
 class Application(Gtk.Application):
     def __init__(self):
@@ -37,6 +38,9 @@ class Welcome:
         startup_check = self.builder.get_object("startup_check")
         startup_check.set_active(settings.get_boolean("startup-show"))
         startup_check.connect("toggled", lambda btn: settings.set_boolean("startup-show", btn.get_active()))
+        print(nouveau_running())
+        print(check_package("akmod-nvidia"))
+        print(not nouveau_running() and not check_package("akmod-nvidia"))
 
         firststeps = [
             Step(
@@ -215,8 +219,7 @@ def start_alignment(obj):
 
 
 def check_package(package):
-    packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
-    return package in packages_proc.stdout.decode('utf-8').split("\n")
+    return package in packages
 
 
 def nouveau_running():
