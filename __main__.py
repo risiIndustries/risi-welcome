@@ -3,7 +3,7 @@ import gi
 import subprocess
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio, GLib
+from gi.repository import Gtk, Gio
 
 debug_mode = False
 icons = Gtk.IconTheme.get_default().list_icons(None)
@@ -58,7 +58,7 @@ class Welcome:
                 not check_package("gstreamer1-plugins-ugly"), True
             ),
             Step(
-                "applications-multimedia-symbolic",
+                "package-x-generic-symbolic",
                 "Setup Flathub (Highly Recommended)",
                 "Installs Flatpak and sets up Flathub. This gives you a bigger selection of apps including some proprietary apps. ",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/flatpaks.risisc", "--trusted"],
@@ -134,7 +134,7 @@ class Welcome:
                 "Contribute Wallpapers",
                 "Are you a photographer or graphic designer?"
                 "\nSubmit your best 4k wallpapers for a chance for them to be in the next risiOS release.",
-                ["xdg-open", "https://github.com/risiOS/risios-35-backgrounds"],
+                ["xdg-open", "https://github.com/risiOS/risios-36-backgrounds"],
                 True, False
             ),
             Step(
