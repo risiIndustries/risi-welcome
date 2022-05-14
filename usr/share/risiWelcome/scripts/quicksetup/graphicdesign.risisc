@@ -1,0 +1,52 @@
+#!/bin/risiscript
+metadata:
+  name: "Graphic Design and Photography"
+  id: "io.risi.quicksetup.graphicdesign"
+  description: "Sets up an environment for graphic design."
+  dependencies: None
+  root: True
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    gimp:
+      - BOOLEAN
+      - "Install GIMP (Photoshop Alternative)"
+      - True
+    photoshop_alternatives:
+      - DESCRIPTION
+      - "We also recommend Pixlr E and Photopea on the Web App Store as Photoshop alternatives."
+    krita:
+      - BOOLEAN
+      - "Install Krita (Digital Painting Program)"
+      - True
+    inkscape:
+      - BOOLEAN
+      - "Install Inkscape (Vector Graphics Editor)"
+      - True
+    darktable:
+      - BOOLEAN
+      - "Install Darktable (Lightroom Alternative)"
+      - True
+  bash: |
+    packages=()
+
+    function check_package () {
+      echo $1 ${!1}
+      if [ ${!1} = True ]; then
+        packages+=("$1")
+      fi
+    }
+
+    check_package gimp
+    check_package krita
+    check_package inkscape
+    check_package darktable
+
+    dnf install -y ${packages[@]}
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "echo true"
+      - "true"

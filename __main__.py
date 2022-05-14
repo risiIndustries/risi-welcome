@@ -11,6 +11,7 @@ settings = Gio.Settings.new("io.risi.Welcome")
 packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
 packages = packages_proc.stdout.decode('utf-8').split("\n")
 
+
 class Application(Gtk.Application):
     def __init__(self):
         Gtk.Application.__init__(
@@ -44,14 +45,15 @@ class Welcome:
             Step(
                 "nvidia",
                 "Install Proprietary NVIDIA Drivers (Highly Recommended)",
-                "Installs proprietary NVIDIA drivers that significantly increase performence.",
+                "Installs proprietary NVIDIA drivers that significantly increase performance.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
                 nouveau_running() and not check_package("akmod-nvidia"), True
             ),
             Step(
                 "applications-multimedia-symbolic",
                 "Setup RPMFusion &amp; Proprietary Codecs (Highly Recommended)",
-                "Installs RPMFusion which allows contains some extra software that risiOS/Fedora cannot ship, and\nproprietary codecs that may be needed to use some media files and render some websites.",
+                "Installs RPMFusion which allows contains some extra software that risiOS/Fedora cannot ship, "
+                "and\nproprietary codecs that may be needed to use some media files and render some websites.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/multimedia.risisc", "--trusted"],
                 not check_package("rpmfusion-free-release") and
                 not check_package("rpmfusion-nonfree-release") and
@@ -60,7 +62,8 @@ class Welcome:
             Step(
                 "package-x-generic-symbolic",
                 "Setup Flathub (Highly Recommended)",
-                "Installs Flatpak and sets up Flathub. This gives you a bigger selection of apps including some proprietary apps. ",
+                "Installs Flatpak and sets up Flathub. This gives you a bigger selection of apps including some "
+                "proprietary apps. ",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/flatpaks.risisc", "--trusted"],
                 not get_flathub_installed(), True
             ),
@@ -138,7 +141,7 @@ class Welcome:
                 True, False
             ),
             Step(
-                "applications-development",
+                "github",
                 "Contribute Code",
                 "Audit and contribute to our codebase on GitHub.",
                 ["xdg-open", "https://github.com/risiOS"],

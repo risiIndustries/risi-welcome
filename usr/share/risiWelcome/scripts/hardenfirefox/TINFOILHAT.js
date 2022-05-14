@@ -108,5 +108,4 @@ user_pref("toolkit.telemetry.updatePing.enabled", false);
 user_pref("webgl.disabled", true);
 user_pref("webgl.renderer-string-override", " ");
 user_pref("webgl.vendor-string-override", " ");
-
-user_pref("dom.security.https_only_mode", false)
+user_pref("dom.security.https_only_mode", true)
