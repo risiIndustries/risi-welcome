@@ -1,0 +1,105 @@
+#!/bin/risiscript
+metadata:
+  name: "Gaming"
+  id: "io.risi.quicksetup.gaming"
+  description: "Sets up an environment for gaming."
+  dependencies:
+    - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+  root: True
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    native_title:
+      - TITLE
+      - "Game Launchers:"
+    steam:
+      - BOOLEAN
+      - "Install Steam"
+      - True
+    minigalaxy:
+      - BOOLEAN
+      - "Install Minigalaxy (GOG Launcher)"
+      - False
+    heroic-games-launcher-bin:
+      - BOOLEAN
+      - "Install Heroic (Epic Games Launcher)"
+      - False
+    lutris:
+      - BOOLEAN
+      - "Install Lutris (Game Manager)"
+      - False
+    gnome-games:
+      - BOOLEAN
+      - "Install GNOME Games (Game Manager with built-in emulation)"
+      - False
+    launcher_description:
+      - DESCRIPTION
+      - "Note: Playing Non-Native games may have varying results. See ProtonDB for more info."
+    tools_title:
+      - TITLE
+      - "Tools:"
+    antimicrox:
+      - BOOLEAN
+      - "Install AntiMicroX (Map controller to keyboard)"
+      - False
+    piper:
+      - BOOLEAN
+      - "Install Piper (Customize RGB devices)"
+      - False
+    gwe:
+      - BOOLEAN
+      - "Install GreenWithEnvy (Tools for NVIDIA GPUs)"
+      - False
+    discord:
+      - BOOLEAN
+      - "Install Discord (Voice Chat and Messaging)"
+      - False
+    emulators_title:
+      - TITLE
+      - "Emulators:"
+    retroarch:
+      - BOOLEAN
+      - "Install RetroArch (Multi-platform emulator)"
+      - False
+    dosbox-staging:
+      - BOOLEAN
+      - "Install DosBox (DOS emulator)"
+      - False
+    warning:
+      - WARNING
+      - "Warning"
+      - "This script will install RPMFusion if its are not already installed."
+  bash: |
+    packages=()
+
+    function check_package () {  # packagename
+      if [ ${!1} = True ]; then
+        packages+=("$1")
+      fi
+    }
+
+    if [ $heroic = True ]; then
+      dnf copr enable atim/heroic-games-launcher -y
+    fi
+
+    check_package steam
+    check_package minigalaxy
+    check_package heroic-games-launcher-bin
+    check_package lutris
+    check_package antimicrox
+    check_package piper
+    check_package gwe
+    check_package discord
+    check_package retroarch
+    check_package gnome-games
+    check_package dosbox-staging
+
+    dnf install -y "${packages[@]}"
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "echo true"
+      - "true"

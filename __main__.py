@@ -100,6 +100,68 @@ class Welcome:
                 check_package("risi-tweaks"), True
             )
         ]
+        quicksetupsteps = [
+            Step(
+                "audio-x-generic-symbolic",
+                "Audio Consumption",
+                "Install applications for listening to music and managing your library.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/audiophile.risisc", "--trusted"
+                ],
+                True, False
+            ),
+            Step(
+                "audio-x-generic",
+                "Audio Consumption",
+                "Install applications for listening to music and managing your library.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/audiophile.risisc", "--trusted"
+                ],
+                True, False
+            ),
+            Step(
+                "input-gaming",
+                "Gaming",
+                "Setup risiOS for PC gaming.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/gaming.risisc", "--trusted"
+                ],
+                True, False
+            ),
+            Step(
+                "camera-photo-symbolic",
+                "Graphic Design & Photographic",
+                "Install applications needed to do graphics work.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/graphicdesign.risisc", "--trusted"
+                ],
+                True, False
+            ),
+            Step(
+                "x-office-document-symbolic",
+                "Productivity",
+                "Install applications commonly needed for office and school work.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/productivity.risisc", "--trusted"
+                ],
+                True, False
+            ),
+            Step(
+                "camera-video-symbolic",
+                "Video Production",
+                "Install applications commonly needed for video-related work.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/videoproduction.risisc", "--trusted"
+                ],
+                True, False
+            )
+        ]
         communitysteps = [
             Step(
                 "discord",
@@ -154,6 +216,9 @@ class Welcome:
             steps.add(item)
         steps = self.builder.get_object("communityBox")
         for item in communitysteps:
+            steps.add(item)
+        steps = self.builder.get_object("quicksetupBox")
+        for item in quicksetupsteps:
             steps.add(item)
         steps = self.builder.get_object("contributeBox")
         for item in contributesteps:

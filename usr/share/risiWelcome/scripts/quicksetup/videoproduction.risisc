@@ -1,0 +1,64 @@
+#!/bin/risiscript
+metadata:
+  name: "Video Production"
+  id: "io.risi.quicksetup.videoprod"
+  description: "Sets up an environment for video production."
+  dependencies:
+    - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+  root: True
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    obs:
+      - BOOLEAN
+      - "Install Open Broadcaster Software (OBS Studio)"
+      - True
+    video_editor:
+      - CHOICE
+      - "Video Editor" # Question for users
+      - [ "Kdenlive", "OpenShot", "Shotcut", "Pitivi", "None" ] # The choices for a user to pick
+    audacity:
+      - BOOLEAN
+      - "Install Audacity (Audio Editor)"
+      - True
+    gimp:
+      - BOOLEAN
+      - "Install GIMP (Photoshop Alternative)"
+      - True
+    warning:
+      - WARNING
+      - "Warning"
+      - "This script will install RPMFusion and proprietary media codecs if they are not already installed."
+  bash: |
+    dnf groupupdate -y multimedia
+
+    packages=("")
+
+    case video_editor in
+      Kdenlive)
+        packages+=("kdenlive");;
+      OpenShot)
+        packages+=("openshot");;
+      Shotcut)
+        packages+=("shotcut");;
+      Pitivi)
+        packages+=("pitivi");;
+    esac
+
+    function check_package () {  # packagename
+      if [ ${!1} = True ]; then
+        packages+=("$1")
+      fi
+    }
+
+    check_package gimp
+
+    dnf install -y "${packages[@]}"
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "echo true"
+      - "true"

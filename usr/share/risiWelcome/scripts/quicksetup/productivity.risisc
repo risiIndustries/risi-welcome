@@ -1,0 +1,87 @@
+#!/bin/risiscript
+metadata:
+  name: "Productivity"
+  id: "io.risi.quicksetup.productivity"
+  description: "Sets up an environment for office work."
+  dependencies: None
+  root: True
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    office_suite:
+      - CHOICE
+      - "Office Suite" # Question for users
+      - [ "LibreOffice", "OnlyOffice", "None" ] # The choices for a user to pick
+    online_office:
+      - DESCRIPTION
+      - "You can also get Microsoft Office Online, GSuite, and Zoho Office from the web app store."
+    email_client:
+      - CHOICE
+      - "Email Client"
+      - [ "Geary", "Evolution", "Thunderbird", "None" ]
+    email_description:
+      - DESCRIPTION
+      - |
+        We recommend Geary for casual Email use, but if you need more features such as
+        POP/Exchange support and calendars we recommend Evolution or Thunderbird.
+
+        You can also get web clients for different email services from the web app store.
+    zoom:
+      - BOOLEAN
+      - "Install Zoom (Video Conferencing App)"
+      - False
+    teams:
+      - BOOLEAN
+      - "Install Microsoft Teams (Team Messanging & Video Conferencing)"
+      - False
+    web_description:
+      - DESCRIPTION
+      - "Other commonly used web apps such as Notion are in the web app store."
+  bash: |
+    packages=("mscore-fonts-all")
+
+    case $office_suite in
+      LibreOffice)
+        packages+=("libreoffice");;
+      OnlyOffice)
+        packages+=("https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors.x86_64.rpm");;
+    esac
+
+    case $email_client in
+      Geary)
+        packages+=("geary");;
+      Evolution)
+        packages+=("evolution");;
+      Thunderbird)
+        packages+=("thunderbird");;
+    esac
+
+    function check_package () {  # packagename
+      if [ ${!1} = True ]; then
+        packages+=("$1")
+      fi
+    }
+
+    function check_package_different () {  # varname, packagename
+      if [ ${!1} = True ]; then
+        packages+=("$2")
+      fi
+    }
+
+    if [ $teams = True ]; then
+      echo "Setting Up Teams Repository"
+      sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
+      rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    fi
+
+    check_package_different zoom https://zoom.us/linux/latest/zoom_x86_64.rpm
+    check_package teams
+
+    dnf install -y "${packages[@]}"
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "echo true"
+      - "true"

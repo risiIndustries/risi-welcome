@@ -1,0 +1,88 @@
+#!/bin/risiscript
+metadata:
+  name: "Audio Consumption"
+  id: "io.risi.quicksetup.audiophile"
+  description: "Sets up an environment for audio consumption."
+  dependencies:
+    - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+  root: True
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    music_player:
+      - CHOICE
+      - "Music Player" # Question for users
+      - [ "Lollypop", "GNOME Music", "Rhythmbox", "None" ] # The choices for a user to pick
+    mp_description:
+      - DESCRIPTION
+      - |
+        Lollypop: Easy to use, a lot of features but can be slow, especially with large libraries.
+        GNOME Music: Bare-bones simple UI, not a lot of features.
+        Rhythmbox: A more old-school iTunes style music player, great for large libraries.
+    picard:
+      - BOOLEAN
+      - "MusicBrainz Picard (Automatic Music Tagger)"
+      - True
+    picard_description:
+      - DESCRIPTION
+      - "Allows you to pull metadata from the internet for your music"
+    soundconverter:
+      - BOOLEAN
+      - "Install SoundConverter"
+      - True
+    soundjuicer:
+      - BOOLEAN
+      - "Install Sound Juicer (CD Ripper)"
+      - True
+    audacity:
+      - BOOLEAN
+      - "Install Audacity (Audio Editor)"
+      - True
+    easyeffects:
+      - BOOLEAN
+      - "Install EasyEffects"
+      - False
+    easyeffects_description:
+      - DESCRIPTION
+      - "Allows you manipulate system audio."
+    warning:
+      - WARNING
+      - "Warning"
+      - "This script will install RPMFusion and proprietary media codecs if they are not already installed."
+  bash: |
+    dnf groupupdate -y multimedia
+
+    packages=()
+
+    case music_player in
+      Lollypop)
+        packages+=("lollypop");;
+      "GNOME Music")
+        packages+=("gnome-music");;
+      Rhythmbox)
+        packages+=("rhythmbox")
+        packages+=("rhythmbox-alternative-toolbar")
+      ;;
+    esac
+
+    function check_package () {  # packagename
+      if [ ${!1} = True ]; then
+        packages+=("$1")
+      fi
+    }
+
+    check_package picard
+    check_package soundconverter
+    check_package sound-juicer
+    check_package audacity
+    check_package easyeffects
+
+    dnf install -y "${packages[@]}"
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "echo true"
+      - "true"

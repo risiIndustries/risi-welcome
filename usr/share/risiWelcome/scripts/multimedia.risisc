@@ -21,7 +21,7 @@ run:
       - DESCRIPTION
       - "Enables extra drivers that may be restricted in some countries (recommended if legal in your country)"
   bash: |
-    sudo dnf groupupdate -y multimedia
+    dnf groupupdate -y multimedia
     if [ "$tainted_drivers" = true ]
     then
           dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
