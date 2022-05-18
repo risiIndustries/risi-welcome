@@ -27,12 +27,20 @@ run:
     warning:
       - WARNING
       - "Warning"
-      - "This may reset some Firefox settings. Run at your own risk."
+      - "This may reset some Firefox settings, and will kill any open instances of Firefox. Run at your own risk."
   bash: |
+
+
     if [[ ! -d ~/.mozilla ]]; then
       echo "Invalid ~/.mozilla directory"
-      sleep 2
-      exit 1
+      firefox --headless &
+      sleep 3
+      killall firefox
+
+      if [[ ! -d ~/.mozilla ]]; then
+        echo "unable to generate ~/.mozilla directory"
+        exit 1
+      fi
     fi
 
     echo "Checking for Profile0"
@@ -42,8 +50,16 @@ run:
       echo "Installing to ~/.mozilla/firefox/$Path"
     else
       echo "Unable to detect Profile0 Path"
-      sleep 2
-      exit 1
+
+      firefox --headless &
+      sleep 3
+      killall firefox
+      source <(grep = <(grep -A5 '\[Profile0\]' ~/.mozilla/firefox/profiles.ini))
+
+      if [[ ! -v Path ]]; then
+        echo "unable to generate profile"
+        exit 1
+      fi
     fi
 
     rm ~/.mozilla/$Path/user.js || true

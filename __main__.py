@@ -122,7 +122,7 @@ class Welcome:
             #     True, False
             # ),
             Step(
-                "input-gaming",
+                "input-gaming-symbolic",
                 "Gaming",
                 "Setup risiOS for PC gaming.",
                 [
