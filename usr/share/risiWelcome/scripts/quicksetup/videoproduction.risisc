@@ -13,14 +13,14 @@ metadata:
 
 run:
   init:
-    obs:
-      - BOOLEAN
-      - "Install Open Broadcaster Software (OBS Studio)"
-      - True
     video_editor:
       - CHOICE
       - "Video Editor" # Question for users
       - [ "Kdenlive", "OpenShot", "Shotcut", "Pitivi", "None" ] # The choices for a user to pick
+    obs_studio:
+      - BOOLEAN
+      - "Install Open Broadcaster Software (OBS Studio)"
+      - True
     audacity:
       - BOOLEAN
       - "Install Audacity (Audio Editor)"
@@ -36,9 +36,9 @@ run:
   bash: |
     dnf groupupdate -y multimedia
 
-    packages=("")
+    packages=()
 
-    case video_editor in
+    case $video_editor in
       Kdenlive)
         packages+=("kdenlive");;
       OpenShot)
@@ -48,6 +48,7 @@ run:
       Pitivi)
         packages+=("pitivi");;
     esac
+    echo "${packages[@]}"
 
     function check_package () {  # packagename
       if [ ${!1} = True ]; then
@@ -55,7 +56,16 @@ run:
       fi
     }
 
+    function check_package_different () {  # varname, packagename
+      if [ ${!1} = True ]; then
+        packages+=("$2")
+      fi
+    }
+
+
     check_package gimp
+    check_package_different obs_studio obs-studio
+    check_package audacity
 
     dnf install -y "${packages[@]}"
   checks:

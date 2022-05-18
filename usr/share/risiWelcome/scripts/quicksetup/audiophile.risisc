@@ -75,9 +75,16 @@ run:
       fi
     }
 
+    function check_package_different () {  # varname, packagename
+      if [ ${!1} = True ]; then
+        packages+=("$2")
+      fi
+    }
+
+
     check_package picard
     check_package soundconverter
-    check_package sound-juicer
+    check_package_different soundjuicer sound-juicer
     check_package audacity
     check_package easyeffects
 

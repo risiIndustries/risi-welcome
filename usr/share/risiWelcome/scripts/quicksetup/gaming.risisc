@@ -24,7 +24,7 @@ run:
       - BOOLEAN
       - "Install Minigalaxy (GOG Launcher)"
       - False
-    heroic-games-launcher-bin:
+    heroic:
       - BOOLEAN
       - "Install Heroic (Epic Games Launcher)"
       - False
@@ -32,7 +32,7 @@ run:
       - BOOLEAN
       - "Install Lutris (Game Manager)"
       - False
-    gnome-games:
+    gnome_games:
       - BOOLEAN
       - "Install GNOME Games (Game Manager with built-in emulation)"
       - False
@@ -65,7 +65,7 @@ run:
       - BOOLEAN
       - "Install RetroArch (Multi-platform emulator)"
       - False
-    dosbox-staging:
+    dosbox_staging:
       - BOOLEAN
       - "Install DosBox (DOS emulator)"
       - False
@@ -82,21 +82,27 @@ run:
       fi
     }
 
+    function check_package_different () {  # varname, packagename
+      if [ ${!1} = True ]; then
+        packages+=("$2")
+      fi
+    }
+
     if [ $heroic = True ]; then
       dnf copr enable atim/heroic-games-launcher -y
     fi
 
     check_package steam
     check_package minigalaxy
-    check_package heroic-games-launcher-bin
+    check_package_different heroic heroic-games-launcher-bin
     check_package lutris
+    check_package_different gnome_games gnome-games
     check_package antimicrox
     check_package piper
     check_package gwe
     check_package discord
     check_package retroarch
-    check_package gnome-games
-    check_package dosbox-staging
+    check_package_different dosbox_staging dosbox-staging
 
     dnf install -y "${packages[@]}"
   checks:

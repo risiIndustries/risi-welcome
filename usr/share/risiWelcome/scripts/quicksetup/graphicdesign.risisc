@@ -34,7 +34,6 @@ run:
     packages=()
 
     function check_package () {
-      echo $1 ${!1}
       if [ ${!1} = True ]; then
         packages+=("$1")
       fi

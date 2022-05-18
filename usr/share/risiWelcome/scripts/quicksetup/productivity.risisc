@@ -14,7 +14,7 @@ run:
     office_suite:
       - CHOICE
       - "Office Suite" # Question for users
-      - [ "LibreOffice", "OnlyOffice", "None" ] # The choices for a user to pick
+      - ["OnlyOffice", "LibreOffice", "None" ] # The choices for a user to pick
     online_office:
       - DESCRIPTION
       - "You can also get Microsoft Office Online, GSuite, and Zoho Office from the web app store."
@@ -72,9 +72,10 @@ run:
     }
 
     if [ $teams = True ]; then
-      echo "Setting Up Teams Repository"
+      echo "Adding Teams Repository"
       sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
       rpm --import https://packages.microsoft.com/keys/microsoft.asc
+      echo "Teams Repo Added"
     fi
 
     check_package_different zoom https://zoom.us/linux/latest/zoom_x86_64.rpm
