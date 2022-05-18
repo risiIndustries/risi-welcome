@@ -226,7 +226,7 @@ Enjoy!
         <property name="subtitle" translatable="yes">Welcome to the next generation of Linux</property>
         <property name="show-close-button">True</property>
         <child>
-          <object class="GtkCheckButton">
+          <object class="GtkCheckButton" id="startup_check">
             <property name="label" translatable="yes">Show on startup</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>

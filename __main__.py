@@ -111,16 +111,16 @@ class Welcome:
                 ],
                 True, False
             ),
-            Step(
-                "audio-x-generic",
-                "Audio Consumption",
-                "Install applications for listening to music and managing your library.",
-                [
-                    "/usr/bin/risi-script-gtk", "--file",
-                    "/usr/share/risiWelcome/scripts/quicksetup/audiophile.risisc", "--trusted"
-                ],
-                True, False
-            ),
+            # Step(
+            #     "audio-x-generic",
+            #     "Audio Consumption",
+            #     "Install applications for listening to music and managing your library.",
+            #     [
+            #         "/usr/bin/risi-script-gtk", "--file",
+            #         "/usr/share/risiWelcome/scripts/quicksetup/audiophile.risisc", "--trusted"
+            #     ],
+            #     True, False
+            # ),
             Step(
                 "input-gaming",
                 "Gaming",
@@ -133,7 +133,7 @@ class Welcome:
             ),
             Step(
                 "camera-photo-symbolic",
-                "Graphic Design & Photographic",
+                "Graphic Design &amp; Photographic",
                 "Install applications needed to do graphics work.",
                 [
                     "/usr/bin/risi-script-gtk", "--file",
