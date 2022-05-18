@@ -42,6 +42,14 @@ run:
     tools_title:
       - TITLE
       - "Tools:"
+    polymc:
+      - BOOLEAN
+      - "Install PolyMC (Excellent Minecraft Launcher)"
+      - False
+    discord:
+      - BOOLEAN
+      - "Install Discord (Voice Chat and Messaging)"
+      - False
     antimicrox:
       - BOOLEAN
       - "Install AntiMicroX (Map controller to keyboard)"
@@ -53,10 +61,6 @@ run:
     gwe:
       - BOOLEAN
       - "Install GreenWithEnvy (Tools for NVIDIA GPUs)"
-      - False
-    discord:
-      - BOOLEAN
-      - "Install Discord (Voice Chat and Messaging)"
       - False
     emulators_title:
       - TITLE
@@ -92,6 +96,12 @@ run:
       dnf copr enable atim/heroic-games-launcher -y
     fi
 
+    if [ $polymc = True ]; then
+      sudo dnf copr enable sentry/polymc -y
+      packages+=("java-17-openjdk")
+      packages+=("java-1.8.0-openjdk")
+    fi
+
     check_package steam
     check_package minigalaxy
     check_package_different heroic heroic-games-launcher-bin
@@ -103,6 +113,7 @@ run:
     check_package discord
     check_package retroarch
     check_package_different dosbox_staging dosbox-staging
+    check_package polymc
 
     dnf install -y "${packages[@]}"
   checks:
