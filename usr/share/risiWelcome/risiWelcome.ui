@@ -2,11 +2,9 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkWindow" id="window">
+  <object class="GtkApplicationWindow" id="window">
     <property name="width-request">-1</property>
     <property name="can-focus">False</property>
-    <property name="default-width">410</property>
-    <property name="default-height">-1</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -86,7 +84,7 @@
                     <property name="margin-bottom">15</property>
                     <property name="label" translatable="yes">Thank you for choosing risiOS!
 
-This welcome screen will help guide you through the
+  This welcome screen will help guide you through the
 available resources for risiOS as well as help you setup 
 your computer to your likings.
 
@@ -138,6 +136,31 @@ Enjoy!
               <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
+                <child>
+                  <object class="GtkViewport">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkListBox" id="quicksetupBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="selection-mode">none</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="name">quicksetup</property>
+                <property name="title" translatable="yes">Quick Setup</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
                 <property name="hscrollbar-policy">never</property>
                 <property name="shadow-type">in</property>
                 <child>
@@ -157,7 +180,7 @@ Enjoy!
               <packing>
                 <property name="name">community</property>
                 <property name="title" translatable="yes">Join The Community</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
@@ -183,7 +206,7 @@ Enjoy!
               <packing>
                 <property name="name">contribute</property>
                 <property name="title" translatable="yes">Contribute to risiOS</property>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </object>
