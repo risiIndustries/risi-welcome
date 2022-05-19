@@ -1,0 +1,106 @@
+#!/bin/risiscript
+metadata:
+  name: "Music Production"
+  id: "io.risi.quicksetup.musicproduction"
+  description: "Sets up an environment for music production."
+  dependencies:
+    - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+  root: True
+  one_time_use: True
+  risiscript_version: 1.0
+  reboot: False
+
+run:
+  init:
+    daws_title:
+      - TITLE
+      - "Open Source DAWs:"
+    ardour6:
+      - BOOLEAN
+      - "Install Ardour"
+      - True
+    lmms:
+      - BOOLEAN
+      - "Install LMMS"
+      - False
+    qtractor:
+      - BOOLEAN
+      - "Install Qtractor"
+      - False
+    composition_title:
+      - TITLE
+      - "Composition:"
+    mscore:
+      - BOOLEAN
+      - "Install Musescore"
+      - False
+    rosegarden4:
+      - BOOLEAN
+      - "Install Rosegarden"
+      - False
+    tools_title:
+      - TITLE
+      - "Tools:"
+    audacity:
+      - BOOLEAN
+      - "Install Audacity (Audio Editor)"
+      - True
+    Carla:
+      - BOOLEAN
+      - "Install Carla (Audio Plugin Host)"
+      - False
+    hydrogen:
+      - BOOLEAN
+      - "Install Hydrogen (Drum Machine)"
+      - False
+    mixxx:
+      - BOOLEAN
+      - "Install Mixxx (DJ Software)"
+      - False
+    tuxguitar:
+      - BOOLEAN
+      - "Install TuxGuitar (Tablature Editor/Player)"
+      - False
+    guitarix:
+      - BOOLEAN
+      - "Install Guitarix (Guitar Amp)"
+      - False
+    yoshimi:
+      - BOOLEAN
+      - "Install Yoshimi (Synthesizer)"
+      - False
+    warning:
+      - WARNING
+      - "Warning"
+      - "This script will install RPMFusion and proprietary media codecs if they are not already installed."
+  bash: |
+    dnf groupupdate -y multimedia
+
+    packages=()
+
+    function check_package () {  # packagename
+      if [ ${!1} = True ]; then
+        packages+=("$1")
+      fi
+    }
+
+    check_package ardour6
+    check_package lmms
+    check_package qtractor
+    check_package mscore
+    check_package rosegarden4
+    check_package audacity
+    check_package Carla
+    check_package hydrogen
+    check_package mixxx
+    check_package tuxguitar
+    check_package guitarix
+    check_package yoshimi
+
+    dnf install -y "${packages[@]}"
+
+  checks:
+    - COMMANDOUTPUTCONTAINS:
+      - "echo true"
+      - "true"

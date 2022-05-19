@@ -111,16 +111,16 @@ class Welcome:
                 ],
                 True, False
             ),
-            # Step(
-            #     "audio-x-generic",
-            #     "Audio Consumption",
-            #     "Install applications for listening to music and managing your library.",
-            #     [
-            #         "/usr/bin/risi-script-gtk", "--file",
-            #         "/usr/share/risiWelcome/scripts/quicksetup/audiophile.risisc", "--trusted"
-            #     ],
-            #     True, False
-            # ),
+            Step(
+                "audio-input-microphone-symbolic",
+                "Audio Production",
+                "Install applications for audio production.",
+                [
+                    "/usr/bin/risi-script-gtk", "--file",
+                    "/usr/share/risiWelcome/scripts/quicksetup/musicproduction.risisc", "--trusted"
+                ],
+                True, False
+            ),
             Step(
                 "input-gaming-symbolic",
                 "Gaming",
