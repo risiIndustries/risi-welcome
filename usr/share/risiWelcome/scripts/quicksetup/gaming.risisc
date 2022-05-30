@@ -97,7 +97,7 @@ run:
     fi
 
     if [ $polymc = True ]; then
-      sudo dnf copr enable sentry/polymc -y
+      dnf copr enable sentry/polymc -y
       packages+=("java-17-openjdk")
       packages+=("java-1.8.0-openjdk")
     fi

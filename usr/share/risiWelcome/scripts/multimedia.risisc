@@ -22,11 +22,12 @@ run:
       - "Enables extra drivers that may be restricted in some countries (recommended if legal in your country)"
   bash: |
     dnf groupupdate -y multimedia
-    if [ "$tainted_drivers" = true ]
+    if [ "$tainted_drivers" = True ]
     then
           dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
           dnf install -y libdvdcss
     fi
+    dnf groupupdate core -y
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "rpm -q gstreamer1-plugins-ugly && echo installed"
