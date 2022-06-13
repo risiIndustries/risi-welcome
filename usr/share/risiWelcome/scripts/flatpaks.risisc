@@ -17,6 +17,7 @@ run:
     echo "setting theme overrides"
     flatpak override --filesystem=~/.themes
     flatpak override --filesystem=/usr/share/themes
+    flatpak override --filesystem=xdg-config/gtk-4.0
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "flatpak remotes"
