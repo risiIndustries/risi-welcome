@@ -97,7 +97,7 @@ class Welcome:
                     "/usr/bin/risi-script-gtk", "--file",
                     "/usr/share/risiWelcome/scripts/hardenfirefox.risisc", "--trusted"
                 ],
-                check_package("risi-tweaks"), True
+                check_package("firefox"), True
             )
         ]
         quicksetupsteps = [
