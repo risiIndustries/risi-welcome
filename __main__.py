@@ -190,8 +190,8 @@ class Welcome:
             Step(
                 "money",
                 "Contribute Financially",
-                "While we do not accept full donations yet, check out our shop for some epic t-shirts and more.",
-                ["xdg-open", "https://risi.io"],
+                "Donate money and support our developers and the development of this project.",
+                ["xdg-open", "https://risi.io/shop/"],
                 True, False
             ),
             Step(
