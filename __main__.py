@@ -47,7 +47,7 @@ class Welcome:
                 "Install Proprietary NVIDIA Drivers (Very Highly Recommended)",
                 "Installs proprietary NVIDIA drivers that significantly increase performance.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
-                nvidia_installed(), True
+                show_nvidia(), True
             ),
             Step(
                 "applications-multimedia-symbolic",
@@ -293,10 +293,10 @@ def check_package(package):
     return package in packages
 
 
-def nvidia_installed():
+def show_nvidia():
     if check_package("akmod-nvidia"):
         return False
-    sp = subprocess.run("lsmod | grep nouveau && exit 0 || exit 1", shell=True)
+    sp = subprocess.run("lshw -C display | grep NVIDIA && echo 0 || echo 1", shell=True)
     return sp.returncode == 0
 
 
