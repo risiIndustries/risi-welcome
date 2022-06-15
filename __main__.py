@@ -47,7 +47,7 @@ class Welcome:
                 "Install Proprietary NVIDIA Drivers (Very Highly Recommended)",
                 "Installs proprietary NVIDIA drivers that significantly increase performance.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
-                nvidia_installed()
+                nvidia_installed(), True
             ),
             Step(
                 "applications-multimedia-symbolic",
