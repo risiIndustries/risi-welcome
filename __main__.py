@@ -44,16 +44,16 @@ class Welcome:
         firststeps = [
             Step(
                 "nvidia",
-                "Install Proprietary NVIDIA Drivers (Highly Recommended)",
+                "Install Proprietary NVIDIA Drivers (Very Highly Recommended)",
                 "Installs proprietary NVIDIA drivers that significantly increase performance.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
                 nvidia_installed()
             ),
             Step(
                 "applications-multimedia-symbolic",
-                "Setup RPMFusion &amp; Proprietary Codecs (Highly Recommended)",
-                "Installs RPMFusion which allows contains some extra software that risiOS/Fedora cannot ship, "
-                "and\nproprietary codecs that may be needed to use some media files and render some websites.",
+                "Setup RPMFusion &amp; Proprietary Codecs (Very Highly Recommended)",
+                "Installs RPMFusion which allows contains some extra software that risiOS/Fedora cannot ship, and"
+                "\nproprietary codecs are needed to use some types media files and use some websites (such as YouTube).",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/multimedia.risisc", "--trusted"],
                 not check_package("rpmfusion-free-release") and
                 not check_package("rpmfusion-nonfree-release") and

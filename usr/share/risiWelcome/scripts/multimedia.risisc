@@ -28,6 +28,7 @@ run:
           dnf install -y libdvdcss
     fi
     dnf groupupdate core -y
+    dnf swap chromium chromium-freeworld -y
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "rpm -q gstreamer1-plugins-ugly && echo installed"
