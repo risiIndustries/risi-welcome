@@ -5,7 +5,7 @@ import subprocess
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
-debug_mode = False
+debug_mode = True
 icons = Gtk.IconTheme.get_default().list_icons(None)
 settings = Gio.Settings.new("io.risi.Welcome")
 packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
@@ -44,20 +44,22 @@ class Welcome:
         firststeps = [
             Step(
                 "nvidia",
-                "Install Proprietary NVIDIA Drivers (Very Highly Recommended)",
+                "Install Proprietary NVIDIA Drivers (Highly Recommended)",
                 "Installs proprietary NVIDIA drivers that significantly increase performance.",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/nvidia.risisc", "--trusted"],
                 show_nvidia(), True
             ),
             Step(
                 "applications-multimedia-symbolic",
-                "Setup RPMFusion &amp; Proprietary Codecs (Very Highly Recommended)",
-                "Installs RPMFusion which allows contains some extra software that risiOS/Fedora cannot ship, and"
-                "\nproprietary codecs are needed to use some types media files and use some websites (such as YouTube).",
+                "Setup RPMFusion &amp; Proprietary Codecs (Highly Recommended)",
+                "Installs RPMFusion (repository with extra software that risiOS/Fedora cannot ship), "
+                "proprietary codecs (needed for some media file types), and Chromium Freeworld "
+                "(Required to use some websites such as YouTube, Netflix, and Spotify).",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/multimedia.risisc", "--trusted"],
                 not check_package("rpmfusion-free-release") and
                 not check_package("rpmfusion-nonfree-release") and
-                not check_package("gstreamer1-plugins-ugly"), True
+                not check_package("gstreamer1-plugins-ugly") and
+                not check_package("chromium-freeworld"), True
             ),
             Step(
                 "package-x-generic-symbolic",
