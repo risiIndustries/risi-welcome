@@ -298,7 +298,7 @@ def check_package(package):
 def show_nvidia():
     if check_package("akmod-nvidia"):
         return False
-    sp = subprocess.run("lshw -C display | grep NVIDIA && echo 0 || echo 1", shell=True)
+    sp = subprocess.run("lshw -C display | grep \"NVIDIA\" && exit 0 || exit 1", shell=True)
     return sp.returncode == 0
 
 
