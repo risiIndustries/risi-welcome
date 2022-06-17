@@ -28,6 +28,3 @@ run: # Conflicts with install function
     - COMMANDOUTPUTCONTAINS:
       - "rpm -q xorg-x11-drv-nvidia && echo installed"
       - "installed"
-    - COMMANDOUTPUTCONTAINS:
-      - "reboot"
-      - ""
