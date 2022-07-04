@@ -2,7 +2,7 @@
 metadata:
   name: "Multimedia Codecs"
   id: "io.risi.multimedia"
-  description: "Installs RPMFusion and Multimedia Codecs"
+  description: "Installs RPMFusion, Multimedia Codecs, and replaces Chromium with Chromium Freeworld"
   dependencies:
     - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
     - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
@@ -29,6 +29,20 @@ run:
     fi
     dnf groupupdate core -y
     dnf swap chromium chromium-freeworld -y
+    
+    if [ "xdg-settings get default-web-browser" = "chromium.desktop" ]
+    then
+      echo "Setting Default Browser to Freeworld"
+      xdg-settings set default-web-browser chromium-freeworld.desktop
+    fi
+    
+    echo "Converting Chromium Webapps to Chromium Freeworld Webapps"
+    for file in ~/.local/share/applications/webapp-*.desktop; do
+      if [ -f "$file" ]; then
+        sed -i 's/Exec=chromium-browser/Exec=chromium-freeworld/g' $file
+        sed -i 's/X-WebApp-Browser=Chromium (chromium-browser)/X-WebApp-Browser=Chromium Freeworld/g' $file
+      fi
+    done
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "rpm -q gstreamer1-plugins-ugly && echo installed"
