@@ -13,6 +13,30 @@ metadata:
 
 run:
   init:
+    system_level:
+      - TITLE
+      - "System Modifications:"
+    kernel:
+      - BOOLEAN
+      - "Sentry Kernel (Used in Nobara)"
+      - False
+    kernel_description:
+      - DESCRIPTION
+      - "Custom kernel with patches for futex2, fsync, winesync, Steam Deck, and more.\nWARNING: Installing a custom kernel will break secure boot. Make sure it's disabled before installing."
+    mesa_git:
+      - BOOLEAN
+      - "Nobara mesa-git"
+      - True
+    mesa_git_description:
+      - DESCRIPTION
+      - "Mesa built from git built. May be less stable but will have fixes for various game bugs faster."
+    glibc:
+      - BOOLEAN
+      - "Nobara's glibc"
+      - True
+    glibc_description:
+      - DESCRIPTION
+      - "Nobara's glibc patches that fix various issues."
     native_title:
       - TITLE
       - "Game Launchers:"
@@ -79,29 +103,30 @@ run:
       - "This script will install RPMFusion if its are not already installed."
   bash: |
     packages=()
-
+    
     function check_package () {  # packagename
       if [ ${!1} = True ]; then
         packages+=("$1")
       fi
     }
-
+    
     function check_package_different () {  # varname, packagename
       if [ ${!1} = True ]; then
         packages+=("$2")
       fi
     }
-
+    
     if [ $heroic = True ]; then
       dnf copr enable atim/heroic-games-launcher -y
     fi
-
+    
     if [ $polymc = True ]; then
       dnf copr enable sentry/polymc -y
       packages+=("java-17-openjdk")
       packages+=("java-1.8.0-openjdk")
     fi
-
+    
+    echo "Installing Applications..."
     check_package steam
     check_package minigalaxy
     check_package_different heroic heroic-games-launcher-bin
@@ -114,8 +139,29 @@ run:
     check_package retroarch
     check_package_different dosbox_staging dosbox-staging
     check_package polymc
-
+    
     dnf install -y "${packages[@]}"
+    
+    if [ $kernel = True ]; then
+      echo "Installing Sentry Kernel..."
+      dnf copr enable sentry/kernel-fsync -y
+      python3 /usr/share/risiWelcome/scripts/gaming/addexcludes.py /etc/yum.repos.d/fedora-updates.repo updates kernel
+      dnf update --refresh -y
+    fi
+    
+    if [ $mesa_git = True ]; then
+      echo "Installing Nobara mesa-git..."
+      dnf copr enable gloriouseggroll/mesa-aco -y
+      python3 /usr/share/risiWelcome/scripts/gaming/addexcludes.py /etc/yum.repos.d/fedora-updates.repo updates mesa
+      dnf update --refresh -y
+    fi
+    
+    if [ $glibc = True ]; then
+      echo "Installing Nobara glibc..."
+      dnf copr enable gloriouseggroll/glibc -y
+      python3 /usr/share/risiWelcome/scripts/gaming/addexcludes.py /etc/yum.repos.d/fedora-updates.repo updates glibc
+      dnf update --refresh -y
+    fi
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "echo true"

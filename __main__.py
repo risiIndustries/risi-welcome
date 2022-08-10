@@ -5,7 +5,7 @@ import subprocess
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
-debug_mode = False
+debug_mode = True
 icons = Gtk.IconTheme.get_default().list_icons(None)
 settings = Gio.Settings.new("io.risi.Welcome")
 packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
@@ -174,6 +174,20 @@ class Welcome:
                 True, False
             ),
             Step(
+                "user-available-symbolic",
+                "Forums",
+                "Typical old school forum site. Great for archiving previous information.",
+                ["xdg-open", "https://risi.io/forums"],
+                True, False
+            ),
+            Step(
+                "reddit",
+                "Reddit",
+                "The frontpage of the community.",
+                ["xdg-open", "https://reddit.com/r/risiOS"],
+                True, False
+            ),
+            Step(
                 "twitter",
                 "Twitter",
                 "Our main social media platform, used for news, announcements.",
@@ -186,13 +200,13 @@ class Welcome:
                 "We put photos here... sometimes.",
                 ["xdg-open", "https://instagram.com/risi.io"],
                 True, False
-            )
+            ),
         ]
         contributesteps = [
             Step(
                 "money",
-                "Contribute Financially",
-                "Donate money and support our developers and the development of this project.",
+                "risiOS Store",
+                "Help support development by either donating or buying merch through our store.",
                 ["xdg-open", "https://risi.io/shop/"],
                 True, False
             ),
@@ -205,7 +219,7 @@ class Welcome:
                 True, False
             ),
             Step(
-                "github",
+                "guycoding",
                 "Contribute Code",
                 "Audit and contribute to our codebase on GitHub.",
                 ["xdg-open", "https://github.com/risiOS"],

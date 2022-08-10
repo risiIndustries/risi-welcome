@@ -44,7 +44,7 @@
                     <property name="margin-start">15</property>
                     <property name="margin-end">15</property>
                     <property name="margin-top">15</property>
-                    <property name="label" translatable="yes">&lt;big&gt;Welcome to &lt;b&gt;risiOS 36&lt;/b&gt;&lt;/big&gt;
+                    <property name="label" translatable="yes">&lt;big&gt;Welcome to &lt;b&gt;risiOS 36.1&lt;/b&gt;&lt;/big&gt;
 &lt;b&gt;The Big Beta&lt;/b&gt;</property>
                     <property name="use-markup">True</property>
                   </object>
