@@ -2,7 +2,7 @@
 metadata:
   name: "NVIDIA Drivers"
   id: "io.risi.nvidia"
-  description: "Installs RPMFusion and proprietary drivers for NVIDIA graphic cards"
+  description: "Installs RPMFusion and proprietary drivers for NVIDIA graphic cards. Will also upgrade system."
   dependencies:
     - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
     - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
@@ -13,18 +13,46 @@ metadata:
 
 run: # Conflicts with install function
   init:
-    warning:
-      - WARNING
-      - "Legacy driver warning"
+    driver:
+      - CHOICE
+      - "Driver Version"
+      - ["Current GeForce/Quadro/Tesla","Legacy GeForce 600/700","Legacy GeForce 400/500"]
+    tainted_description:
+      - DESCRIPTION
       - |
-        This script doesn't install legacy drivers. If you have need a legacy driver for your current GPU, please follow this guide:\nhttps://rpmfusion.org/Howto/NVIDIA#Legacy_GeForce_600.2F700
+        Current GeForce/Quadro/Tesla: Suitable for any GPU released after 2014.
+        Legacy GeForce 600/700: Suitable for any NVIDIA Kepler GPU found between 2012 and 2014
+        Legacy GeForce 400/500: Suitable for any NVIDIA Fermi GPU found between 2010 and 2012
+        Older Drivers are not supported but may be available elsewhere.
+        More information can be found at https://rpmfusion.org/Howto/NVIDIA
+
   bash: |
-    dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda
+    echo "Updating System"
+    dnf upgrade -y
+    
+    if [ "$driver" == "Current GeForce/Quadro/Tesla" ]; then
+      echo "Installing NVIDIA drivers"
+      dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda xorg-x11-drv-nvidia-cuda-libs
+  
+      echo "Applying Suspend Patch"
+      dnf install -y xorg-x11-drv-nvidia-power
+      systemctl enable nvidia-{suspend,resume,hibernate}
+    fi
+    
+    if [ "$driver" == "Legacy GeForce 600/700" ]; then
+      echo "Installing NVIDIA drivers"
+      dnf install -y xorg-x11-drv-nvidia-470xx akmod-nvidia-470xx xorg-x11-drv-nvidia-470xx-cuda
+    fi
+    
+    if [ "$driver" == "Legacy GeForce 400/500" ]; then
+      echo "Installing NVIDIA drivers"
+      dnf install -y xorg-x11-drv-nvidia-390xx akmod-nvidia-390xx xorg-x11-drv-nvidia-390xx-cuda
+    fi
 
   checks: # use $varname to access variable
     - COMMANDOUTPUTCONTAINS:
-      - "rpm -q akmod-nvidia && echo installed"
-      - "installed"
+      - "rpm -q akmod-nvidia || rpm -q akmod-nvidia-470xx || rpm -q akmod-nvidia-390xx && echo yes"
+      - "yes"
     - COMMANDOUTPUTCONTAINS:
-      - "rpm -q xorg-x11-drv-nvidia && echo installed"
-      - "installed"
+      - "rpm -q xorg-x11-drv-nvidia || rpm -q xorg-x11-drv-nvidia-470xx || rpm -q xorg-x11-drv-nvidia-390xx && echo yes"
+      - "yes"

@@ -16,13 +16,6 @@ run:
     system_level:
       - TITLE
       - "System Modifications:"
-    kernel:
-      - BOOLEAN
-      - "Sentry Kernel (Used in Nobara)"
-      - False
-    kernel_description:
-      - DESCRIPTION
-      - "Custom kernel with patches for futex2, fsync, winesync, Steam Deck, and more.\nWARNING: Installing a custom kernel will break secure boot. Make sure it's disabled before installing."
     mesa_git:
       - BOOLEAN
       - "Nobara mesa-git"

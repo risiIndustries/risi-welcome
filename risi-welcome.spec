@@ -1,6 +1,6 @@
 Name:           risi-welcome
-Version:        0.2
-Release:        20%{?dist}
+Version:        36.1.1
+Release:        21%{?dist}
 Summary:        risiOS's Welcome app.
 
 License:        GPL v3
@@ -47,6 +47,9 @@ install -m 755 __main__.py %{buildroot}%{_bindir}/risi-welcome
 %{_sysconfdir}/xdg/autostart/io.risi.Welcome.desktop
 
 %changelog
+* Fri Sep 2 2022 PizzaLovingNerd
+- Changed version scheme to match the distro release.
+
 * Tue Mar 1 2022 PizzaLovingNerd
 - First spec file
 
