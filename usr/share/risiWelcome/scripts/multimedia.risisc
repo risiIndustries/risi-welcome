@@ -19,7 +19,7 @@ run:
       - False
     tainted_description:
       - DESCRIPTION
-      - "Enables extra drivers that may be restricted in some countries (recommended if legal in your country)"
+      - "Enables extra drivers (such as libdvdcss) that may be restricted in some countries (recommended if legal in your country)"
   bash: |
     dnf groupupdate -y multimedia
     if [ "$tainted_drivers" = True ]

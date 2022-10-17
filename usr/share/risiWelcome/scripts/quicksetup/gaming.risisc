@@ -13,23 +13,6 @@ metadata:
 
 run:
   init:
-    system_level:
-      - TITLE
-      - "System Modifications:"
-    mesa_git:
-      - BOOLEAN
-      - "Nobara mesa-git"
-      - True
-    mesa_git_description:
-      - DESCRIPTION
-      - "Mesa built from git built. May be less stable but will have fixes for various game bugs faster."
-    glibc:
-      - BOOLEAN
-      - "Nobara's glibc"
-      - True
-    glibc_description:
-      - DESCRIPTION
-      - "Nobara's glibc patches that fix various issues."
     native_title:
       - TITLE
       - "Game Launchers:"
@@ -134,27 +117,6 @@ run:
     check_package polymc
     
     dnf install -y "${packages[@]}"
-    
-    if [ $kernel = True ]; then
-      echo "Installing Sentry Kernel..."
-      dnf copr enable sentry/kernel-fsync -y
-      python3 /usr/share/risiWelcome/scripts/gaming/addexcludes.py /etc/yum.repos.d/fedora-updates.repo updates kernel
-      dnf update --refresh -y
-    fi
-    
-    if [ $mesa_git = True ]; then
-      echo "Installing Nobara mesa-git..."
-      dnf copr enable gloriouseggroll/mesa-aco -y
-      python3 /usr/share/risiWelcome/scripts/gaming/addexcludes.py /etc/yum.repos.d/fedora-updates.repo updates mesa
-      dnf update --refresh -y
-    fi
-    
-    if [ $glibc = True ]; then
-      echo "Installing Nobara glibc..."
-      dnf copr enable gloriouseggroll/glibc -y
-      python3 /usr/share/risiWelcome/scripts/gaming/addexcludes.py /etc/yum.repos.d/fedora-updates.repo updates glibc
-      dnf update --refresh -y
-    fi
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "echo true"
