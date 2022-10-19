@@ -42,9 +42,9 @@ run:
     tools_title:
       - TITLE
       - "Tools:"
-    polymc:
+    prismlauncher:
       - BOOLEAN
-      - "Install PolyMC (Excellent Minecraft Launcher)"
+      - "Install Prism Launcher (Excellent Minecraft Launcher)"
       - False
     discord:
       - BOOLEAN
@@ -96,8 +96,8 @@ run:
       dnf copr enable atim/heroic-games-launcher -y
     fi
     
-    if [ $polymc = True ]; then
-      dnf copr enable sentry/polymc -y
+    if [ $prismlauncher = True ]; then
+      dnf copr enable g3tchoo/prismlauncher -y
       packages+=("java-17-openjdk")
       packages+=("java-1.8.0-openjdk")
     fi
@@ -114,7 +114,7 @@ run:
     check_package discord
     check_package retroarch
     check_package_different dosbox_staging dosbox-staging
-    check_package polymc
+    check_package prismlauncher
     
     dnf install -y "${packages[@]}"
   checks:
