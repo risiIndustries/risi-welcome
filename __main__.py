@@ -5,7 +5,7 @@ import subprocess
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
-debug_mode = False
+debug_mode = True
 icons = Gtk.IconTheme.get_default().list_icons(None)
 settings = Gio.Settings.new("io.risi.Welcome")
 packages_proc = subprocess.run(["rpm", "-qa", "--qf", "%{NAME}\n"], stdout=subprocess.PIPE)
@@ -68,6 +68,14 @@ class Welcome:
                 "proprietary apps. ",
                 ["/usr/bin/risi-script-gtk", "--file", "/usr/share/risiWelcome/scripts/flatpaks.risisc", "--trusted"],
                 not get_flathub_installed(), True
+            ),
+            Step(
+                "applications-graphics-symbolic",
+                "Add Some Themes",
+                "risiOS ships with a theming engine called rTheme. There's a couple themes already preinstalled, but "
+                "you may want to grab more from our forums.",
+                ["xdg-open", "https://themes.risi.io"],
+                check_package("rtheme-lib"), True
             ),
             Step(
                 "org.gnome.Software",
