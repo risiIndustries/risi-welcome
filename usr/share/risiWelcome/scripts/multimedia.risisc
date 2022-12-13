@@ -21,6 +21,10 @@ run:
       - DESCRIPTION
       - "Enables extra drivers (such as libdvdcss) that may be restricted in some countries (recommended if legal in your country)"
   bash: |
+    echo "temporary removing celluloid"
+    dnf remove celluloid -y
+    
+    echo "installing multimedia codecs"
     dnf groupupdate -y multimedia
     if [ "$tainted_drivers" = True ]
     then
@@ -43,6 +47,9 @@ run:
         sed -i 's/X-WebApp-Browser=Chromium (chromium-browser)/X-WebApp-Browser=Chromium Freeworld/g' $file
       fi
     done
+    
+    echo "reinstalling celluloid"
+    dnf install celluloid -y
   checks:
     - COMMANDOUTPUTCONTAINS:
       - "rpm -q gstreamer1-plugins-ugly && echo installed"

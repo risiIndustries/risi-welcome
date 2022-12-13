@@ -62,6 +62,10 @@ run:
       - BOOLEAN
       - "Install GreenWithEnvy (Tools for NVIDIA GPUs)"
       - False
+    goverlay:
+      - BOOLEAN
+      - "Install Goverlay (Manage and configure gaming overlays)"
+      - False
     emulators_title:
       - TITLE
       - "Emulators:"
@@ -115,6 +119,7 @@ run:
     check_package retroarch
     check_package_different dosbox_staging dosbox-staging
     check_package prismlauncher
+    check_package goverlay
     
     dnf install -y "${packages[@]}"
   checks:
